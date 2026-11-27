@@ -2,42 +2,24 @@
 
 **Show, don't prompt.**
 
-A visual-first, open-source development companion for the AI you already use.
+Select an element on your own development preview, describe the change, approve the relevant evidence, and hand it to your existing AI coding assistant. No model API, account, backend or production deployment needed.
 
-> Early prototype. The element picker and copyable edit context are implemented in the starter. Browser integration still needs real-world testing. Direct visual editing, source mapping, automatic patches, and deployment are not shipped.
+**Status: v0.1.0 release candidate — not a stable release.** Local unit and Chromium DOM checks passed; installed-extension CI and native toolbar permission smoke tests must pass before a stable release. Direct visual editing and source mapping are not yet shipped.
 
-## Why WebD?
+## Install the candidate
 
-A powerful model shouldn't need five paragraphs to understand which button is broken. Point to an element, describe the intended change, and give the AI the small amount of context it actually needs. Keep review and production releases in your hands.
+1. Download the source from this branch or the candidate ZIP from a successful [CI run](https://github.com/docbennyt/aiDo-WebD/actions). Extract it. Source checkouts contain the extension in `extension/`; the packaged ZIP has `manifest.json` at its root.
+2. In desktop Chrome 116+, open `chrome://extensions`, enable Developer mode and select **Load unpacked**. Choose the folder containing `manifest.json`.
+3. Open an authorized HTTP(S) development preview. For the bundled demo, run `python -m http.server 8000` from the source root and open `http://localhost:8000/docs/demo.html`.
+4. Click the WebD toolbar icon (or Alt+Shift+W if available), then **Select element**. Click the target; Escape or Cancel ends selection.
+5. Describe the change. Edit the approved evidence to remove anything sensitive. Review the generated handoff, then copy it into ChatGPT, Codex or your preferred assistant. Review the source diff and verify the result on the real page.
 
-WebD is inspired by reusable skills in creator workflows and the visual feedback loops found in tools such as Lovable, v0 and Bolt. It is not affiliated with those products or OpenAI.
+Reopen the toolbar icon on each new target tab. The extension requests only activeTab, scripting and sidePanel. IDs/classes and page origin/path are opt-in, with no query or fragment. No input values, page text, screenshots or cookies are intentionally captured. DOM selectors and styles may still disclose information; review before copying. Capture is not a source mapping. Top-level light DOM only; embedded frames and shadow internals are unsupported. Page-controlled listeners and rerenders may interfere. Closing the panel may leave a picker until its timeout; cancel explicitly first.
 
-## Try the prototype
+## Develop
 
-1. Clone or download [this repository](https://github.com/docbennyt/aiDo-WebD).
-2. In desktop Chrome or another compatible Chromium browser, open `chrome://extensions`, enable Developer mode, and choose **Load unpacked**. Select `extension/`.
-3. Open `docs/demo.html` through a local server (`python -m http.server 8000` from the repository root; visit `http://localhost:8000/docs/demo.html`) or open an authorized development preview.
-4. Click WebD's extension icon to open its side panel. Click **Select element**, then click an element on the page (Esc cancels).
-5. Type a change, inspect the generated context, and copy it into your AI assistant. If the assistant supports repository edits, have it locate the source and propose a small patch. Verify the patch at desktop and mobile widths.
+Node 22 and Python 3.13: `node --test tests/context.test.mjs`; `python -m pip install -r tests/requirements.txt`; `python -m playwright install chromium`; `python tests/dom.py`; `python tests/extension.py`; `python scripts/package.py`. The extension test uses a disposable loopback-only permission grant for interactions, never shipped. Verify actual toolbar grant separately. See [release gate](docs/checkpoint.md), [benchmark plan](docs/benchmark.md), [contributing](CONTRIBUTING.md) and [security](SECURITY.md).
 
-No API key, model call, remote backend, subscription bypass or automatic deployment is included in the prototype. Your AI assistant's own usage limits still apply. The extension only asks for user-activated access to the current tab; restricted browser pages and cross-origin embedded frames are not supported. Do not select sensitive elements. Class names, IDs and paths may contain confidential information; inspect and redact the context before sharing.
+If WebD helps you, [star the project](https://github.com/docbennyt/aiDo-WebD) and report a specific workflow that could be improved. No productivity numbers are claimed before measurements exist.
 
-## Roadmap
-
-- [x] Original visual edit skill and user-controlled prompt format.
-- [x] Chromium extension starter: element selection and computed-style capture.
-- [ ] Browser smoke tests and cross-browser compatibility.
-- [ ] Safe local visual overrides, responsive preview and undo.
-- [ ] Source mapping for supported build systems; explicit patch approval.
-- [ ] Curated, license-aware skill catalog and official integrations.
-- [ ] Comparative benchmarks for time-to-accepted-change, correction turns, token counts where available, and regressions.
-
-## Contribute
-
-Try a real frontend task, then report reproduction steps, browser version, expected outcome and actual outcome. No invented savings claims; record the whole workflow, including review and testing. See [the benchmark plan](docs/benchmark.md) and [visual frontend edit skill](skills/visual-frontend-edit/SKILL.md).
-
-If the problem resonates with you, star the repository and share a concrete workflow you want WebD to improve.
-
-## License
-
-MIT for original project files. Third-party assets, components and skills retain their own licenses. Do not redistribute paid or restricted material without permission.
+MIT; see LICENSE. WebD is not affiliated with any model provider.
