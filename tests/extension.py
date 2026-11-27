@@ -17,7 +17,7 @@ def worker(context):
 try:
     with sync_playwright() as p, TemporaryDirectory() as temp:
         tmp=Path(temp); original=root/'extension'; c=launch(p,tmp/'base',original)
-        sw=worker(c); assert sw.evaluate('chrome.runtime.getManifest().permissions.sort()')==['activeTab','scripting','sidePanel']; assert not sw.evaluate('chrome.runtime.getManifest().host_permissions || []'); c.close()
+        sw=worker(c); assert sw.evaluate('chrome.runtime.getManifest().permissions.sort()')==['activeTab','scripting','sidePanel']; assert not sw.evaluate('chrome.runtime.getManifest().host_permissions || []'); assert sorted(sw.evaluate('chrome.runtime.getManifest().optional_host_permissions'))==['http://*/*','https://*/*']; c.close()
         copy=tmp/'extension'; shutil.copytree(original,copy); manifest=json.loads((copy/'manifest.json').read_text()); manifest['host_permissions']=['http://127.0.0.1/*']; (copy/'manifest.json').write_text(json.dumps(manifest))
         c=launch(p,tmp/'test',copy); sw=worker(c); extension_id=sw.url.split('/')[2]
         panel=c.new_page(); panel.goto(f'chrome-extension://{extension_id}/panel.html'); page=c.pages[0]; page.goto(url); page.bring_to_front()

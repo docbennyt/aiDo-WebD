@@ -4,7 +4,7 @@
 
 Select an element on your own development preview, describe the change, approve the relevant evidence, and hand it to your existing AI coding assistant. No model API, account, backend or production deployment needed.
 
-**Status: v0.1.0 release candidate — not a stable release.** Local unit and Chromium DOM checks passed; installed-extension CI and native toolbar permission smoke tests must pass before a stable release. Direct visual editing and source mapping are not yet shipped.
+**Status: v0.1.1 access candidate — not a stable release.** Local unit and Chromium DOM checks passed; installed-extension CI and native toolbar permission smoke tests must pass before a stable release. Direct visual editing and source mapping are not yet shipped.
 
 ## Install the candidate
 
@@ -14,7 +14,7 @@ Select an element on your own development preview, describe the change, approve 
 4. Click the WebD toolbar icon (or Alt+Shift+W if available), then **Select element**. Click the target; Escape or Cancel ends selection.
 5. Describe the change. Edit the approved evidence to remove anything sensitive. Review the generated handoff, then copy it into ChatGPT, Codex or your preferred assistant. Review the source diff and verify the result on the real page.
 
-Reopen the toolbar icon on each new target tab. The extension requests only activeTab, scripting and sidePanel. IDs/classes and page origin/path are opt-in, with no query or fragment. No input values, page text, screenshots or cookies are intentionally captured. DOM selectors and styles may still disclose information; review before copying. Capture is not a source mapping. Top-level light DOM only; embedded frames and shadow internals are unsupported. Page-controlled listeners and rerenders may interfere. Closing the panel may leave a picker until its timeout; cancel explicitly first.
+Reopen the toolbar icon on each new target tab. Required permissions remain activeTab, scripting and sidePanel. If the browser still denies access, expand **Site access & troubleshooting**, paste the website URL, click **Allow this site**, approve Chrome's prompt, and select again. Only the specified scheme and hostname are requested (all paths and ports on that host); permission persists until revoked via the panel or browser settings. No mandatory host access, tab history, or automatic injection is added. Restricted browser pages remain unsupported. IDs/classes and page origin/path are opt-in, with no query or fragment. No input values, page text, screenshots or cookies are intentionally captured. DOM selectors and styles may still disclose information; review before copying. Capture is not a source mapping. Top-level light DOM only; embedded frames and shadow internals are unsupported. Page-controlled listeners and rerenders may interfere. Closing the panel may leave a picker until its timeout; cancel explicitly first.
 
 ## Develop
 
