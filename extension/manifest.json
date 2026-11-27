@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "WebD by aiDo",
+  "version": "0.0.1",
+  "description": "Select an element and prepare focused visual-edit context for your AI assistant.",
+  "minimum_chrome_version": "116",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "sidePanel"
+  ],
+  "action": {
+    "default_title": "Open WebD"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "side_panel": {
+    "default_path": "panel.html"
+  }
+}

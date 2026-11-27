@@ -1,0 +1,3 @@
+# Benchmark plan (not results)
+
+Use matched tasks against the same source revision, model and acceptance criteria. Compare ordinary chat-based editing with WebD-assisted editing; alternate order or use independent participants to limit learning effects. Include mobile spacing, text alignment, component state and responsive overflow tasks. Record time from task start to accepted patch, correction prompts, files changed, token counts only when observable, and test or visual regressions. Include setup, review and rework time. Retain anonymized task descriptions and results with participant consent. Do not infer token savings from prompt length alone, or claim an improvement before measurements exist.
